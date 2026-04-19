@@ -41,10 +41,18 @@ const menu: MenuItem[] = [
   { id: "chapli", name: "Chapli Kebab (4 pcs)", desc: "Peshawari beef patties with naan & chutney.", priceRs: 700, image: chapli, tag: "Snack" },
 ];
 
+const tagFilters = ["All", "Bestseller", "Sunday special", "Family size", "BBQ", "Comfort", "Snack"] as const;
+
 function OrderPage() {
   const [cart, setCart] = useState<Record<string, number>>({});
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
+  const [activeTag, setActiveTag] = useState<typeof tagFilters[number]>("All");
+
+  const visibleMenu = useMemo(
+    () => (activeTag === "All" ? menu : menu.filter((m) => m.tag === activeTag)),
+    [activeTag],
+  );
 
   const items = useMemo(
     () =>
@@ -97,8 +105,24 @@ function OrderPage() {
       </section>
 
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 grid lg:grid-cols-[1fr_380px] gap-10">
-        <div className="grid sm:grid-cols-2 gap-6">
-          {menu.map((m) => {
+        <div>
+          <div className="flex flex-wrap gap-2 mb-6">
+            {tagFilters.map((t) => (
+              <button
+                key={t}
+                onClick={() => setActiveTag(t)}
+                className={`px-3.5 py-1.5 rounded-full text-xs font-medium uppercase tracking-wider transition-warm border ${
+                  activeTag === t
+                    ? "bg-primary text-primary-foreground border-primary shadow-soft"
+                    : "bg-card text-foreground/70 border-border hover:border-primary/50"
+                }`}
+              >
+                {t}
+              </button>
+            ))}
+          </div>
+          <div className="grid sm:grid-cols-2 gap-6">
+          {visibleMenu.map((m) => {
             const qty = cart[m.id] ?? 0;
             return (
               <div
