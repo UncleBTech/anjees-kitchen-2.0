@@ -1,8 +1,16 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@300;400;500;600&family=Caveat:wght@500;600;700&display=swap");
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
 
+
 @custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-script: "Caveat", cursive;
+}
 
 /*
  * Design system definition.
@@ -59,42 +67,72 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-spice-saffron: var(--spice-saffron);
+  --color-spice-cardamom: var(--spice-cardamom);
+  --color-spice-clove: var(--spice-clove);
+  --color-paper: var(--paper);
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.129 0.042 264.695);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
-  --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: oklch(0.968 0.007 247.896);
-  --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.968 0.007 247.896);
-  --accent-foreground: oklch(0.208 0.042 265.755);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.704 0.04 256.788);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.984 0.003 247.858);
-  --sidebar-foreground: oklch(0.129 0.042 264.695);
-  --sidebar-primary: oklch(0.208 0.042 265.755);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.968 0.007 247.896);
-  --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
-  --sidebar-border: oklch(0.929 0.013 255.508);
-  --sidebar-ring: oklch(0.704 0.04 256.788);
+  --radius: 0.75rem;
+
+  /* Warm rustic Pakistani kitchen palette */
+  --background: oklch(0.985 0.012 75);          /* warm cream */
+  --foreground: oklch(0.22 0.035 40);           /* deep cocoa */
+  --card: oklch(0.98 0.015 70);
+  --card-foreground: oklch(0.22 0.035 40);
+  --popover: oklch(0.98 0.015 70);
+  --popover-foreground: oklch(0.22 0.035 40);
+
+  --primary: oklch(0.52 0.16 32);               /* paprika red-brown */
+  --primary-foreground: oklch(0.98 0.012 75);
+  --primary-glow: oklch(0.62 0.19 38);          /* warm chili glow */
+
+  --secondary: oklch(0.94 0.03 75);             /* soft turmeric cream */
+  --secondary-foreground: oklch(0.28 0.04 40);
+
+  --muted: oklch(0.93 0.022 70);
+  --muted-foreground: oklch(0.45 0.03 45);
+
+  --accent: oklch(0.72 0.16 70);                /* saffron gold */
+  --accent-foreground: oklch(0.22 0.035 40);
+
+  --destructive: oklch(0.55 0.22 28);
+  --destructive-foreground: oklch(0.98 0.012 75);
+
+  --border: oklch(0.88 0.02 70);
+  --input: oklch(0.9 0.02 70);
+  --ring: oklch(0.52 0.16 32);
+
+  /* Brand-extra tokens */
+  --spice-saffron: oklch(0.78 0.16 75);
+  --spice-cardamom: oklch(0.55 0.08 140);
+  --spice-clove: oklch(0.32 0.05 40);
+  --paper: oklch(0.96 0.02 75);
+
+  --gradient-warm: linear-gradient(135deg, oklch(0.52 0.16 32) 0%, oklch(0.65 0.18 50) 60%, oklch(0.78 0.16 75) 100%);
+  --gradient-hero: linear-gradient(180deg, oklch(0.18 0.04 40 / 0.1) 0%, oklch(0.18 0.04 40 / 0.85) 100%);
+  --gradient-paper: linear-gradient(180deg, oklch(0.985 0.012 75) 0%, oklch(0.95 0.025 70) 100%);
+
+  --shadow-warm: 0 20px 50px -20px oklch(0.4 0.15 35 / 0.35);
+  --shadow-card: 0 8px 30px -12px oklch(0.3 0.08 40 / 0.18);
+  --shadow-soft: 0 2px 12px -4px oklch(0.3 0.08 40 / 0.12);
+
+  --transition-warm: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+  --chart-1: oklch(0.52 0.16 32);
+  --chart-2: oklch(0.72 0.16 70);
+  --chart-3: oklch(0.55 0.08 140);
+  --chart-4: oklch(0.62 0.19 38);
+  --chart-5: oklch(0.45 0.05 45);
+  --sidebar: oklch(0.98 0.015 70);
+  --sidebar-foreground: oklch(0.22 0.035 40);
+  --sidebar-primary: oklch(0.52 0.16 32);
+  --sidebar-primary-foreground: oklch(0.98 0.012 75);
+  --sidebar-accent: oklch(0.94 0.03 75);
+  --sidebar-accent-foreground: oklch(0.28 0.04 40);
+  --sidebar-border: oklch(0.88 0.02 70);
+  --sidebar-ring: oklch(0.52 0.16 32);
 }
 
 .dark {
@@ -140,5 +178,53 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4, h5 {
+    font-family: var(--font-display);
+    letter-spacing: -0.015em;
   }
 }
+
+@layer utilities {
+  .font-display { font-family: var(--font-display); }
+  .font-script { font-family: var(--font-script); }
+  .bg-gradient-warm { background-image: var(--gradient-warm); }
+  .bg-gradient-paper { background-image: var(--gradient-paper); }
+  .shadow-warm { box-shadow: var(--shadow-warm); }
+  .shadow-card-warm { box-shadow: var(--shadow-card); }
+  .shadow-soft { box-shadow: var(--shadow-soft); }
+  .transition-warm { transition: var(--transition-warm); }
+
+  .text-balance { text-wrap: balance; }
+
+  .recipe-card-hover {
+    transition: var(--transition-warm);
+  }
+  .recipe-card-hover:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-warm);
+  }
+
+  .ornament-divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: var(--accent);
+  }
+  .ornament-divider::before,
+  .ornament-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--border), transparent);
+  }
+}
+
+@keyframes float-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-float-up { animation: float-up 0.7s ease-out both; }
