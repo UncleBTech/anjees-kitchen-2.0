@@ -163,6 +163,7 @@ function OrderPage() {
               </div>
             );
           })}
+          </div>
         </div>
 
         {/* CART */}
