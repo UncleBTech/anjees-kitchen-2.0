@@ -67,6 +67,10 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-spice-saffron: var(--spice-saffron);
+  --color-spice-cardamom: var(--spice-cardamom);
+  --color-spice-clove: var(--spice-clove);
+  --color-paper: var(--paper);
 }
 
 :root {
@@ -174,5 +178,53 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4, h5 {
+    font-family: var(--font-display);
+    letter-spacing: -0.015em;
   }
 }
+
+@layer utilities {
+  .font-display { font-family: var(--font-display); }
+  .font-script { font-family: var(--font-script); }
+  .bg-gradient-warm { background-image: var(--gradient-warm); }
+  .bg-gradient-paper { background-image: var(--gradient-paper); }
+  .shadow-warm { box-shadow: var(--shadow-warm); }
+  .shadow-card-warm { box-shadow: var(--shadow-card); }
+  .shadow-soft { box-shadow: var(--shadow-soft); }
+  .transition-warm { transition: var(--transition-warm); }
+
+  .text-balance { text-wrap: balance; }
+
+  .recipe-card-hover {
+    transition: var(--transition-warm);
+  }
+  .recipe-card-hover:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-warm);
+  }
+
+  .ornament-divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: var(--accent);
+  }
+  .ornament-divider::before,
+  .ornament-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--border), transparent);
+  }
+}
+
+@keyframes float-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-float-up { animation: float-up 0.7s ease-out both; }
