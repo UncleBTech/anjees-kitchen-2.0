@@ -5,6 +5,17 @@ import malaiBoti from "@/assets/recipe-malai-boti.jpg";
 import haleem from "@/assets/recipe-haleem.jpg";
 import chapli from "@/assets/recipe-chapli.jpg";
 
+export type RecipeTag =
+  | "Quick"
+  | "Vegetarian"
+  | "BBQ"
+  | "Dessert"
+  | "Spicy"
+  | "Mild"
+  | "Weekend"
+  | "One-Pot"
+  | "Crowd-Pleaser";
+
 export type Recipe = {
   slug: string;
   title: string;
@@ -15,6 +26,7 @@ export type Recipe = {
   excerpt: string;
   image: string;
   date: string;
+  tags: RecipeTag[];
 };
 
 export const recipes: Recipe[] = [
@@ -29,6 +41,7 @@ export const recipes: Recipe[] = [
       "Spicy chicken and potato biryani layered with saffron rice, fried onions, and aloo bukhara. The Sunday classic in Karachi homes.",
     image: biryani,
     date: "Jul 26, 2025",
+    tags: ["Spicy", "Weekend", "One-Pot", "Crowd-Pleaser"],
   },
   {
     slug: "beef-nihari",
@@ -41,6 +54,7 @@ export const recipes: Recipe[] = [
       "Slow-simmered beef stew with bone marrow, finished with ginger and lemon. Sunday morning, naan in hand — pure tradition.",
     image: nihari,
     date: "Jul 20, 2025",
+    tags: ["Spicy", "Weekend", "Crowd-Pleaser"],
   },
   {
     slug: "chicken-karahi",
@@ -53,6 +67,7 @@ export const recipes: Recipe[] = [
       "Tomato-forward, ginger-loaded, finished in a screaming-hot wok. The dhaba favourite that comes together in under an hour.",
     image: karahi,
     date: "Jul 12, 2025",
+    tags: ["Quick", "One-Pot"],
   },
   {
     slug: "chicken-malai-boti",
@@ -65,6 +80,7 @@ export const recipes: Recipe[] = [
       "Cream and yoghurt marinated chicken skewers — soft, mild, and built for the grill. A daawat staple.",
     image: malaiBoti,
     date: "Jun 17, 2025",
+    tags: ["Mild", "BBQ", "Quick"],
   },
   {
     slug: "haleem",
@@ -77,6 +93,7 @@ export const recipes: Recipe[] = [
       "Slow-cooked beef and lentils pounded to a velvety stew. Topped with fried onions, ginger, and a squeeze of lemon.",
     image: haleem,
     date: "Jun 16, 2025",
+    tags: ["Weekend", "Crowd-Pleaser", "One-Pot"],
   },
   {
     slug: "chapli-kebab",
@@ -89,6 +106,7 @@ export const recipes: Recipe[] = [
       "Peshawar's flat, fragrant beef kebabs with pomegranate seeds and crushed coriander. Crispy edges, juicy middle.",
     image: chapli,
     date: "Jun 19, 2025",
+    tags: ["BBQ", "Quick"],
   },
 ];
 
