@@ -63,6 +63,18 @@ function RecipeDetail() {
       </div>
 
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-16 prose-content">
+        {recipe.tags.length > 0 && (
+          <div className="flex flex-wrap gap-2 mb-6">
+            {recipe.tags.map((tag: string) => (
+              <span
+                key={tag}
+                className="text-xs uppercase tracking-wider px-3 py-1 rounded-full bg-accent/15 text-accent-foreground border border-accent/30"
+              >
+                #{tag}
+              </span>
+            ))}
+          </div>
+        )}
         <p className="font-display text-2xl text-foreground leading-snug">
           {recipe.excerpt}
         </p>

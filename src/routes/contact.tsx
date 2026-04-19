@@ -44,6 +44,21 @@ function ContactPage() {
         <Field label="Your name" id="name" type="text" placeholder="Ayesha Khan" />
         <Field label="Email" id="email" type="email" placeholder="you@example.com" />
         <div>
+          <label htmlFor="subject" className="block text-sm font-medium mb-1.5">Subject</label>
+          <select
+            id="subject"
+            defaultValue=""
+            className="w-full rounded-xl border border-input bg-background px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+          >
+            <option value="" disabled>Choose a topic…</option>
+            <option value="recipe">Recipe question</option>
+            <option value="tiffin">Join the tiffin list</option>
+            <option value="catering">Catering / daawat</option>
+            <option value="collab">Collaboration</option>
+            <option value="other">Something else</option>
+          </select>
+        </div>
+        <div>
           <label htmlFor="msg" className="block text-sm font-medium mb-1.5">Message</label>
           <textarea
             id="msg"
@@ -54,10 +69,14 @@ function ContactPage() {
         </div>
         <button
           type="submit"
-          className="w-full rounded-full bg-primary text-primary-foreground py-3 font-medium hover:bg-primary/90 transition-warm shadow-soft"
+          disabled={sent}
+          className="w-full rounded-full bg-primary text-primary-foreground py-3 font-medium hover:bg-primary/90 transition-warm shadow-soft disabled:opacity-70"
         >
           {sent ? "Message sent — thank you!" : "Send message"}
         </button>
+        <p className="text-xs text-muted-foreground text-center">
+          We usually reply within a day. For urgent orders, WhatsApp is fastest.
+        </p>
       </form>
     </section>
   );

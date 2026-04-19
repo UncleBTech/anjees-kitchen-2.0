@@ -42,6 +42,18 @@ export function RecipeCard({ recipe }: { recipe: Recipe }) {
             <Users className="h-3.5 w-3.5" /> Serves {recipe.serves}
           </span>
         </div>
+        {recipe.tags.length > 0 && (
+          <div className="mt-3 flex flex-wrap gap-1.5">
+            {recipe.tags.slice(0, 3).map((tag) => (
+              <span
+                key={tag}
+                className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full bg-secondary text-foreground/70 border border-border/60"
+              >
+                #{tag}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
     </Link>
   );
