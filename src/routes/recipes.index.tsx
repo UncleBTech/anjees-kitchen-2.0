@@ -5,7 +5,7 @@ import { recipes, type RecipeTag } from "@/lib/recipes";
 import { RecipeCard } from "@/components/RecipeCard";
 import { Input } from "@/components/ui/input";
 
-export const Route = createFileRoute("/recipes")({
+export const Route = createFileRoute("/recipes/")({
   head: () => ({
     meta: [
       { title: "Recipes — Anjee's Kitchen" },
