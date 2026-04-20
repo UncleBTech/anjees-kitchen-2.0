@@ -2,7 +2,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { Clock, Users, Flame, ArrowLeft } from "lucide-react";
 import { getRecipe, recipes } from "@/lib/recipes";
 
-export const Route = createFileRoute("/recipes_/$slug")({
+export const Route = createFileRoute("/recipes/$slug")({
   loader: ({ params }) => {
     const recipe = getRecipe(params.slug);
     if (!recipe) throw notFound();
