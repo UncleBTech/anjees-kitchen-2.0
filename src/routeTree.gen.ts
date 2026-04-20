@@ -15,6 +15,7 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as RecipesSlugRouteImport } from './routes/recipes_.$slug'
+import { Route as RecipesRouteImport } from './routes/recipes_.'
 
 const RecipesRoute = RecipesRouteImport.update({
   id: '/recipes',
@@ -46,6 +47,11 @@ const RecipesSlugRoute = RecipesSlugRouteImport.update({
   path: '/recipes/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RecipesRoute = RecipesRouteImport.update({
+  id: '/recipes_/',
+  path: '/recipes/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -53,6 +59,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/order': typeof OrderRoute
   '/recipes': typeof RecipesRoute
+  '/recipes/': typeof RecipesRoute
   '/recipes/$slug': typeof RecipesSlugRoute
 }
 export interface FileRoutesByTo {
@@ -70,6 +77,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/order': typeof OrderRoute
   '/recipes': typeof RecipesRoute
+  '/recipes_/': typeof RecipesRoute
   '/recipes_/$slug': typeof RecipesSlugRoute
 }
 export interface FileRouteTypes {
@@ -80,6 +88,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/order'
     | '/recipes'
+    | '/recipes/'
     | '/recipes/$slug'
   fileRoutesByTo: FileRoutesByTo
   to: '/' | '/about' | '/contact' | '/order' | '/recipes' | '/recipes/$slug'
@@ -90,6 +99,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/order'
     | '/recipes'
+    | '/recipes_/'
     | '/recipes_/$slug'
   fileRoutesById: FileRoutesById
 }
@@ -98,6 +108,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
   OrderRoute: typeof OrderRoute
+  RecipesRoute: typeof RecipesRoute
   RecipesRoute: typeof RecipesRoute
   RecipesSlugRoute: typeof RecipesSlugRoute
 }
@@ -146,6 +157,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RecipesSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/recipes_/': {
+      id: '/recipes_/'
+      path: '/recipes'
+      fullPath: '/recipes/'
+      preLoaderRoute: typeof RecipesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -155,8 +173,18 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   OrderRoute: OrderRoute,
   RecipesRoute: RecipesRoute,
+  RecipesRoute: RecipesRoute,
   RecipesSlugRoute: RecipesSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}
