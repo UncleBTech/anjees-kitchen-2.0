@@ -1,32 +1,29 @@
-# Stage 1 — build the React frontend
-FROM node:20-alpine AS builder
+# ---- Stage 1: build the Vite frontend ----
+FROM node:20-alpine AS frontend-builder
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
+ARG VITE_CONTACT_API_URL=/api/contact
+ENV VITE_CONTACT_API_URL=$VITE_CONTACT_API_URL
 RUN npm run build
 
-# Stage 2 — production image with nginx + Node together
-FROM node:20-alpine
-RUN apk add --no-cache nginx
+# ---- Stage 2: install the Node backend deps ----
+FROM node:20-alpine AS server-builder
+WORKDIR /srv
+COPY server/package*.json ./
+RUN npm install --omit=dev
+COPY server/. ./
 
-WORKDIR /app
-
-# Copy built frontend
-COPY --from=builder /app/dist /usr/share/nginx/html
-COPY --from=builder /app/nginx.conf /etc/nginx/http.d/default.conf
-
-# Copy backend server
-COPY server/ ./server/
-RUN cd server && npm install --production
-
-# Entrypoint script
-COPY docker-entrypoint.sh /docker-entrypoint.sh
-RUN chmod +x /docker-entrypoint.sh
-
+# ---- Stage 3: runtime image with nginx + node ----
+FROM nginx:alpine
+RUN apk add --no-cache nodejs
+COPY --from=frontend-builder /app/dist /usr/share/nginx/html
+COPY --from=frontend-builder /app/nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=server-builder /srv /srv
+COPY docker-entrypoint.sh /docker-entrypoint-combined.sh
+RUN chmod +x /docker-entrypoint-combined.sh
 EXPOSE 80
-
 HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
-  CMD wget --no-verbose --tries=1 --spider http://127.0.0.1/ || exit 1
-
-ENTRYPOINT ["/docker-entrypoint.sh"]
+  CMD wget --no-verbose --tries=1 --spider http://127.0.0.1/healthz || exit 1
+CMD ["/docker-entrypoint-combined.sh"]
