@@ -1,12 +1,12 @@
 # ---- Stage 1: build the Vite frontend ----
-FROM node:20-alpine AS frontend-builder
+FROM oven/bun:1 AS frontend-builder
 WORKDIR /app
-COPY package*.json ./
-RUN npm install
+COPY package.json bun.lockb ./
+RUN bun install --frozen-lockfile
 COPY . .
 ARG VITE_CONTACT_API_URL=/api/contact
 ENV VITE_CONTACT_API_URL=$VITE_CONTACT_API_URL
-RUN npm run build
+RUN bun run build
 
 # ---- Stage 2: install the Node backend deps ----
 FROM node:20-alpine AS server-builder
