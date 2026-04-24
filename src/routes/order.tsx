@@ -1,47 +1,46 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { Plus, Minus, Trash2, MessageCircle } from "lucide-react";
-import biryani from "@/assets/recipe-biryani.jpg";
-import nihari from "@/assets/recipe-nihari.jpg";
-import karahi from "@/assets/recipe-karahi.jpg";
-import malaiBoti from "@/assets/recipe-malai-boti.jpg";
-import haleem from "@/assets/recipe-haleem.jpg";
-import chapli from "@/assets/recipe-chapli.jpg";
+import { Plus, Minus, Trash2, MessageCircle, Truck } from "lucide-react";
 
 export const Route = createFileRoute("/order")({
   head: () => ({
     meta: [
-      { title: "Order Home-Cooked Meals — Anjee's Kitchen" },
-      { name: "description", content: "Order fresh, home-style Pakistani meals delivered in Karachi. Build your tiffin and check out via WhatsApp — no app needed." },
-      { property: "og:title", content: "Order on WhatsApp — Anjee's Kitchen" },
-      { property: "og:description", content: "Fresh home-cooked tiffins, ordered via WhatsApp." },
+      { title: "Our Kitchen — Anjee's Kitchen, Bradford" },
+      { name: "description", content: "Order handmade frozen parathas, kebabs, samosas and snacks from Anjee's Kitchen. Made fresh in Bradford with desi ghee and halal ingredients." },
+      { property: "og:title", content: "Our Kitchen — Anjee's Kitchen" },
+      { property: "og:description", content: "Handmade frozen Pakistani food, made fresh in Bradford." },
     ],
   }),
   component: OrderPage,
 });
 
-// !!! REPLACE with your real WhatsApp number (international format, no +)
-const WHATSAPP_NUMBER = "923000000000";
+// Replace with real WhatsApp number (international format, no +)
+const WHATSAPP_NUMBER = "447000000000";
 
 type MenuItem = {
   id: string;
   name: string;
   desc: string;
-  priceRs: number;
-  image: string;
+  priceGBP: number;
   tag: string;
 };
 
 const menu: MenuItem[] = [
-  { id: "biryani", name: "Sindhi Chicken Biryani", desc: "Spicy, layered with potato & saffron rice.", priceRs: 650, image: biryani, tag: "Bestseller" },
-  { id: "nihari", name: "Beef Nihari", desc: "Slow-cooked overnight, with naan & lemon.", priceRs: 850, image: nihari, tag: "Sunday special" },
-  { id: "karahi", name: "Chicken Karahi (½ kg)", desc: "Tomato-forward, ginger-loaded, dhaba-style.", priceRs: 1100, image: karahi, tag: "Family size" },
-  { id: "malai", name: "Chicken Malai Boti (6 sticks)", desc: "Creamy, mild, charcoal-grilled.", priceRs: 950, image: malaiBoti, tag: "BBQ" },
-  { id: "haleem", name: "Beef Haleem (Bowl)", desc: "Lentils & shredded beef, with all the toppings.", priceRs: 550, image: haleem, tag: "Comfort" },
-  { id: "chapli", name: "Chapli Kebab (4 pcs)", desc: "Peshawari beef patties with naan & chutney.", priceRs: 700, image: chapli, tag: "Snack" },
+  // Parathas
+  { id: "plain-paratha", name: "Plain Paratha", desc: "Handmade with desi ghee. Pack of 5.", priceGBP: 8.0, tag: "Parathas" },
+  { id: "aloo-paratha", name: "Aloo Paratha", desc: "Spiced potato filling, handmade with desi ghee. Pack of 4.", priceGBP: 9.5, tag: "Parathas" },
+  { id: "qeema-paratha", name: "Qeema Paratha", desc: "Spiced minced beef filling, handmade with desi ghee. Pack of 4.", priceGBP: 11.0, tag: "Parathas" },
+  { id: "chicken-cheese-paratha", name: "Chicken & Cheese Paratha", desc: "Shredded chicken and cheese filling, handmade with desi ghee. Pack of 4.", priceGBP: 12.0, tag: "Parathas" },
+  // Snacks
+  { id: "chicken-shami", name: "Chicken Shami Kebab", desc: "Classic shami kebabs, handmade. Fry from frozen. Pack of 8.", priceGBP: 7.0, tag: "Snacks" },
+  { id: "chicken-samosa", name: "Chicken Samosa", desc: "Crispy handmade samosas with spiced chicken filling. Pack of 6.", priceGBP: 6.0, tag: "Snacks" },
+  { id: "chicken-puff", name: "Chicken Puff Pastry", desc: "Golden puff pastry with a spiced chicken filling. Pack of 4.", priceGBP: 5.5, tag: "Snacks" },
+  { id: "chicken-bread", name: "Chicken Bread", desc: "Soft filled bread with a spiced chicken filling. Pack of 2.", priceGBP: 5.0, tag: "Snacks" },
 ];
 
-const tagFilters = ["All", "Bestseller", "Sunday special", "Family size", "BBQ", "Comfort", "Snack"] as const;
+const tagFilters = ["All", "Parathas", "Snacks"] as const;
+
+const fmtGBP = (n: number) => `£${n.toFixed(2)}`;
 
 function OrderPage() {
   const [cart, setCart] = useState<Record<string, number>>({});
@@ -61,7 +60,7 @@ function OrderPage() {
         .filter((x) => x.item && x.qty > 0),
     [cart],
   );
-  const total = items.reduce((s, x) => s + x.item.priceRs * x.qty, 0);
+  const total = items.reduce((s, x) => s + x.item.priceGBP * x.qty, 0);
 
   const add = (id: string) => setCart((c) => ({ ...c, [id]: (c[id] ?? 0) + 1 }));
   const sub = (id: string) =>
@@ -78,12 +77,12 @@ function OrderPage() {
     const lines = [
       "*New Order — Anjee's Kitchen*",
       "",
-      ...items.map(({ item, qty }) => `• ${qty}× ${item.name} — Rs ${item.priceRs * qty}`),
+      ...items.map(({ item, qty }) => `• ${qty}× ${item.name} — ${fmtGBP(item.priceGBP * qty)}`),
       "",
-      `*Total: Rs ${total}*`,
+      `*Total: ${fmtGBP(total)}*`,
       "",
       name ? `Name: ${name}` : "",
-      address ? `Address: ${address}` : "",
+      address ? `Collection / Delivery: ${address}` : "",
     ].filter(Boolean);
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(lines.join("\n"))}`;
     window.open(url, "_blank");
@@ -93,14 +92,20 @@ function OrderPage() {
     <>
       <section className="bg-gradient-paper border-b border-border/60">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 md:py-20 text-center">
-          <span className="font-script text-3xl text-primary">This week's menu</span>
+          <span className="font-script text-3xl text-primary">Fresh from Bradford —</span>
           <h1 className="font-display text-5xl md:text-6xl mt-2 text-balance">
-            Home-cooked, hot, on your table.
+            Our Kitchen
           </h1>
           <p className="mt-5 text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Build your tiffin below and check out on WhatsApp — no signup, no app.
-            Karachi delivery only · orders before 11 AM for same-day.
+            Everything is made fresh to order using halal-certified meat, free-range eggs, desi ghee and fresh vegetables. Collection from Bradford or Saturday delivery across Yorkshire and beyond. Please allow 2–3 days for most orders.
           </p>
+
+          <div className="mt-8 mx-auto max-w-3xl rounded-2xl bg-card border border-border/60 shadow-soft px-5 py-4 text-left flex items-start gap-3">
+            <Truck className="h-5 w-5 mt-0.5 text-primary shrink-0" />
+            <p className="text-sm text-foreground/80 leading-relaxed">
+              <span className="font-medium text-foreground">Saturday delivery available</span> — Bradford, Leeds, Halifax, Wakefield, Huddersfield, Oldham, Rochdale, Manchester &amp; Wolverhampton. Orders must be placed by Thursday midnight. £3 delivery on orders under £50, free over £50.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -122,24 +127,20 @@ function OrderPage() {
             ))}
           </div>
           <div className="grid sm:grid-cols-2 gap-6">
-          {visibleMenu.map((m) => {
-            const qty = cart[m.id] ?? 0;
-            return (
-              <div
-                key={m.id}
-                className="rounded-2xl overflow-hidden bg-card shadow-card-warm border border-border/60 flex flex-col"
-              >
-                <div className="relative aspect-[4/3] overflow-hidden">
-                  <img src={m.image} alt={m.name} loading="lazy" className="h-full w-full object-cover" />
-                  <span className="absolute top-3 left-3 rounded-full bg-accent text-accent-foreground text-xs font-medium px-3 py-1 shadow-soft">
+            {visibleMenu.map((m) => {
+              const qty = cart[m.id] ?? 0;
+              return (
+                <div
+                  key={m.id}
+                  className="rounded-2xl bg-card shadow-card-warm border border-border/60 p-6 flex flex-col"
+                >
+                  <span className="self-start rounded-full bg-accent/15 text-accent text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1">
                     {m.tag}
                   </span>
-                </div>
-                <div className="p-5 flex-1 flex flex-col">
-                  <h3 className="font-display text-xl">{m.name}</h3>
-                  <p className="mt-1 text-sm text-muted-foreground line-clamp-2">{m.desc}</p>
-                  <div className="mt-4 pt-4 border-t border-border/60 flex items-center justify-between">
-                    <span className="font-display text-lg text-primary">Rs {m.priceRs}</span>
+                  <h3 className="font-display text-xl mt-3">{m.name}</h3>
+                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed flex-1">{m.desc}</p>
+                  <div className="mt-5 pt-4 border-t border-border/60 flex items-center justify-between">
+                    <span className="font-display text-lg text-primary">{fmtGBP(m.priceGBP)}</span>
                     {qty === 0 ? (
                       <button
                         onClick={() => add(m.id)}
@@ -149,26 +150,25 @@ function OrderPage() {
                       </button>
                     ) : (
                       <div className="inline-flex items-center gap-2 rounded-full border border-border bg-background p-1">
-                        <button onClick={() => sub(m.id)} className="h-7 w-7 rounded-full bg-secondary inline-flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-warm">
+                        <button onClick={() => sub(m.id)} aria-label="Decrease quantity" className="h-7 w-7 rounded-full bg-secondary inline-flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-warm">
                           <Minus className="h-3.5 w-3.5" />
                         </button>
                         <span className="font-medium text-sm w-5 text-center">{qty}</span>
-                        <button onClick={() => add(m.id)} className="h-7 w-7 rounded-full bg-secondary inline-flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-warm">
+                        <button onClick={() => add(m.id)} aria-label="Increase quantity" className="h-7 w-7 rounded-full bg-secondary inline-flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-warm">
                           <Plus className="h-3.5 w-3.5" />
                         </button>
                       </div>
                     )}
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
           </div>
         </div>
 
         {/* CART */}
         <aside className="lg:sticky lg:top-24 h-fit rounded-2xl bg-card shadow-warm border border-border/60 p-6">
-          <h2 className="font-display text-2xl">Your Tiffin</h2>
+          <h2 className="font-display text-2xl">Your Order</h2>
           {items.length === 0 ? (
             <p className="mt-4 text-sm text-muted-foreground">
               Your basket is empty. Add a dish to get started.
@@ -180,10 +180,10 @@ function OrderPage() {
                   <div>
                     <div className="font-medium text-sm">{item.name}</div>
                     <div className="text-xs text-muted-foreground">
-                      {qty} × Rs {item.priceRs} = Rs {qty * item.priceRs}
+                      {qty} × {fmtGBP(item.priceGBP)} = {fmtGBP(qty * item.priceGBP)}
                     </div>
                   </div>
-                  <button onClick={() => remove(item.id)} className="text-muted-foreground hover:text-destructive transition-warm">
+                  <button onClick={() => remove(item.id)} aria-label={`Remove ${item.name}`} className="text-muted-foreground hover:text-destructive transition-warm">
                     <Trash2 className="h-4 w-4" />
                   </button>
                 </li>
@@ -193,7 +193,7 @@ function OrderPage() {
 
           <div className="mt-5 pt-5 border-t border-border/60 flex justify-between font-display text-lg">
             <span>Total</span>
-            <span className="text-primary">Rs {total}</span>
+            <span className="text-primary">{fmtGBP(total)}</span>
           </div>
 
           <div className="mt-5 space-y-3">
@@ -206,7 +206,7 @@ function OrderPage() {
             <textarea
               value={address}
               onChange={(e) => setAddress(e.target.value)}
-              placeholder="Delivery address"
+              placeholder="Collection or delivery address"
               rows={2}
               className="w-full rounded-xl border border-input bg-background px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
             />
@@ -220,7 +220,7 @@ function OrderPage() {
             <MessageCircle className="h-4 w-4" /> Checkout on WhatsApp
           </button>
           <p className="mt-3 text-xs text-muted-foreground text-center">
-            Opens WhatsApp with your order pre-filled. We'll confirm timing & payment there.
+            Opens WhatsApp with your order pre-filled. We'll confirm timing &amp; payment there.
           </p>
         </aside>
       </section>
