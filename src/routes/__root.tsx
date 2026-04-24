@@ -1,8 +1,6 @@
-import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
+import { Outlet, Link, createRootRoute } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
-
-import appCss from "../styles.css?url";
 
 function NotFoundComponent() {
   return (
@@ -26,49 +24,6 @@ function NotFoundComponent() {
   );
 }
 
-export const Route = createRootRoute({
-  head: () => ({
-    meta: [
-      { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Anjee's Kitchen — Pakistani home cooking, recipes & meals" },
-      {
-        name: "description",
-        content:
-          "Slow-cooked Pakistani recipes from a home kitchen — biryani, nihari, karahi, kebabs and more. Cook along or order home-style meals on WhatsApp.",
-      },
-      { name: "author", content: "Anjee's Kitchen" },
-      { property: "og:title", content: "Anjee's Kitchen — Pakistani home cooking" },
-      { property: "og:description", content: "Authentic Pakistani recipes and home-style meals." },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-    links: [
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
-    ],
-  }),
-  shellComponent: RootShell,
-  component: RootComponent,
-  notFoundComponent: NotFoundComponent,
-});
-
-function RootShell({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="en">
-      <head>
-        <HeadContent />
-      </head>
-      <body>
-        {children}
-        <Scripts />
-      </body>
-    </html>
-  );
-}
-
 function RootComponent() {
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -80,3 +35,8 @@ function RootComponent() {
     </div>
   );
 }
+
+export const Route = createRootRoute({
+  component: RootComponent,
+  notFoundComponent: NotFoundComponent,
+});
