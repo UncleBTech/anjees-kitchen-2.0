@@ -2,7 +2,7 @@
 FROM oven/bun:1 AS frontend-builder
 WORKDIR /app
 COPY package.json bun.lockb ./
-RUN bun install --frozen-lockfile
+RUN bun install
 COPY . .
 ARG VITE_CONTACT_API_URL=/api/contact
 ENV VITE_CONTACT_API_URL=$VITE_CONTACT_API_URL
