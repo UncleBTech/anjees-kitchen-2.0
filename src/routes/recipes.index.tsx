@@ -1,6 +1,6 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { Search, X } from "lucide-react";
+import { Search, X, ArrowRight } from "lucide-react";
 import { recipes, type RecipeTag } from "@/lib/recipes";
 import { RecipeCard } from "@/components/RecipeCard";
 import { Input } from "@/components/ui/input";
@@ -8,10 +8,10 @@ import { Input } from "@/components/ui/input";
 export const Route = createFileRoute("/recipes/")({
   head: () => ({
     meta: [
-      { title: "Recipes — Anjee's Kitchen" },
-      { name: "description", content: "Browse Pakistani recipes — biryani, curries, kebabs and slow-cooked classics. All tested in a home kitchen." },
+      { title: "Recipes are moving to Khana Khazana — Anjee's Kitchen" },
+      { name: "description", content: "Our recipe collection is moving to Khana Khazana, a free recipe vault by Anjee's Kitchen. Browse a preview and join the waitlist." },
       { property: "og:title", content: "Recipes — Anjee's Kitchen" },
-      { property: "og:description", content: "Pakistani recipes from a home kitchen." },
+      { property: "og:description", content: "Find our recipes on Khana Khazana, our free recipe vault." },
     ],
   }),
   component: RecipesPage,
@@ -65,14 +65,21 @@ function RecipesPage() {
     <>
       <section className="bg-gradient-paper border-b border-border/60">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 md:py-24 text-center">
-          <span className="font-script text-3xl text-primary">The recipe book</span>
+          <span className="font-script text-3xl text-primary">Recipes are moving —</span>
           <h1 className="font-display text-5xl md:text-6xl mt-2 text-balance">
-            Cook the food we grew up on.
+            Find our recipes on Khana Khazana
           </h1>
           <p className="mt-5 text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Every recipe is written for the way you actually cook — pantry spices,
-            simple steps, and notes from a real Pakistani home kitchen.
+            Our full recipe collection will live on Khana Khazana — our free recipe management tool. Browse a preview below, and join the waitlist to be first to access the full library.
           </p>
+          <div className="mt-8">
+            <Link
+              to="/khana-khazana"
+              className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-6 py-3 text-sm font-medium shadow-warm hover:bg-primary/90 transition-warm"
+            >
+              Visit Khana Khazana <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
         </div>
       </section>
 

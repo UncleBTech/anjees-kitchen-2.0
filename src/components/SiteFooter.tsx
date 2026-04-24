@@ -13,8 +13,7 @@ export function SiteFooter() {
             <span className="font-display text-xl">Anjee's Kitchen</span>
           </div>
           <p className="text-paper/75 max-w-md leading-relaxed">
-            Slow-cooked Pakistani recipes, written for the way you actually cook.
-            From a home kitchen, to yours.
+            Handmade in Bradford with desi ghee, free-range eggs and a lot of love.
           </p>
           <div className="flex gap-3 pt-2">
             {[Facebook, Instagram, Mail].map((Icon, i) => (
@@ -32,10 +31,12 @@ export function SiteFooter() {
         <div>
           <h4 className="font-display text-base mb-3">Explore</h4>
           <ul className="space-y-2 text-paper/75 text-sm">
-            <li><Link to="/recipes" className="hover:text-accent transition-warm">Recipes</Link></li>
-            <li><Link to="/order" className="hover:text-accent transition-warm">Order Meals</Link></li>
-            <li><Link to="/about" className="hover:text-accent transition-warm">About Anjee</Link></li>
-            <li><Link to="/contact" className="hover:text-accent transition-warm">Contact</Link></li>
+            <li><Link to="/order" className="hover:text-accent transition-warm">Our Kitchen</Link></li>
+            <li><Link to="/shop" className="hover:text-accent transition-warm">The Pantry</Link></li>
+            <li><Link to="/cakes" className="hover:text-accent transition-warm">Cakes</Link></li>
+            <li><Link to="/khana-khazana" className="hover:text-accent transition-warm">Khana Khazana</Link></li>
+            <li><Link to="/about" className="hover:text-accent transition-warm">About</Link></li>
+            <li><Link to="/how-to-order" className="hover:text-accent transition-warm">How to Order</Link></li>
           </ul>
         </div>
 
@@ -61,7 +62,7 @@ export function SiteFooter() {
       </div>
       <div className="border-t border-paper/10">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 text-xs text-paper/50 flex flex-wrap justify-between gap-2">
-          <span>© {new Date().getFullYear()} Anjee's Kitchen. Made with cardamom & care.</span>
+          <span>© {new Date().getFullYear()} Anjee's Kitchen, Bradford. Made with cardamom & care.</span>
           <span>Pakistani home cooking</span>
         </div>
       </div>

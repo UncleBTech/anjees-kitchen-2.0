@@ -2,17 +2,15 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, ChefHat, Heart, Sparkles } from "lucide-react";
 import heroImg from "@/assets/hero-feast.jpg";
 import spicesBg from "@/assets/spices-bg.jpg";
-import { recipes } from "@/lib/recipes";
-import { RecipeCard } from "@/components/RecipeCard";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Anjee's Kitchen — Pakistani home cooking" },
+      { title: "Anjee's Kitchen — Pakistani home cooking, Bradford" },
       {
         name: "description",
         content:
-          "Authentic Pakistani recipes from a home kitchen. Cook biryani, nihari, karahi and kebabs — or order home-style meals via WhatsApp.",
+          "Handmade Pakistani food from Bradford. Frozen parathas, kebabs, samosas, chutneys, spice blends and celebration cakes — collection or Saturday delivery across Yorkshire.",
       },
       { property: "og:image", content: heroImg },
     ],
@@ -21,8 +19,6 @@ export const Route = createFileRoute("/")({
 });
 
 function HomePage() {
-  const featured = recipes.slice(0, 3);
-
   return (
     <>
       {/* HERO */}
@@ -39,28 +35,27 @@ function HomePage() {
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-28 md:py-40 text-paper">
           <div className="max-w-2xl animate-float-up">
             <span className="font-script text-2xl text-accent">
-              From Karachi, with love —
+              From Bradford, with love —
             </span>
             <h1 className="mt-3 font-display text-5xl md:text-7xl font-semibold leading-[1.05] text-balance">
               Pakistani home cooking,
               <span className="block italic text-accent">unhurried.</span>
             </h1>
             <p className="mt-6 text-lg text-paper/85 max-w-xl leading-relaxed">
-              Slow-simmered curries, smoky kebabs and Sunday biryanis — written
-              the way they're cooked at home. Follow along, or let us cook for you.
+              Slow-cooked curries, handmade parathas, homemade chutneys and celebration cakes — made fresh in Bradford with free-range eggs, fresh vegetables, and desi ghee. Order for collection or Saturday delivery across Yorkshire and beyond.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
-                to="/recipes"
+                to="/order"
                 className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow-warm hover:bg-primary/90 transition-warm"
               >
-                Browse Recipes <ArrowRight className="h-4 w-4" />
+                See Our Kitchen <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
                 to="/order"
                 className="inline-flex items-center gap-2 rounded-full bg-paper/10 backdrop-blur border border-paper/30 px-6 py-3 text-sm font-medium text-paper hover:bg-paper/20 transition-warm"
               >
-                Order on WhatsApp
+                Order via WhatsApp
               </Link>
             </div>
           </div>
@@ -71,9 +66,9 @@ function HomePage() {
       <section className="bg-secondary/60">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 grid md:grid-cols-3 gap-8">
           {[
-            { icon: ChefHat, title: "Tested in a real kitchen", body: "Every recipe is cooked, eaten and rewritten until it works first try." },
-            { icon: Heart, title: "Built for home cooks", body: "Pantry spices, simple steps, no fancy gear. Daawat-worthy results." },
-            { icon: Sparkles, title: "Order ready-cooked", body: "Don't feel like cooking? Get a fresh tiffin delivered via WhatsApp." },
+            { icon: ChefHat, title: "Made with proper ingredients", body: "Free-range eggs, fresh vegetables, desi ghee and butter. No frozen packs, no shortcuts. Every product made fresh to order." },
+            { icon: Heart, title: "A family labour of love", body: "Three generations of cooking behind every dish. Recipes passed down from Anjee's kitchen in Punjab, made with the care you'd give your own family." },
+            { icon: Sparkles, title: "Halal. Always.", body: "Every product is 100% halal. We use halal-certified meat and take allergen information seriously — just ask when you order." },
           ].map(({ icon: Icon, title, body }) => (
             <div key={title} className="flex gap-4">
               <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
@@ -88,24 +83,33 @@ function HomePage() {
         </div>
       </section>
 
-      {/* FEATURED RECIPES */}
+      {/* KHANA KHAZANA TEASER */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20">
-        <div className="flex items-end justify-between flex-wrap gap-4 mb-10">
-          <div>
-            <span className="font-script text-2xl text-primary">This week</span>
-            <h2 className="font-display text-4xl md:text-5xl mt-1">Featured Recipes</h2>
+        <div className="rounded-3xl overflow-hidden bg-gradient-warm p-10 md:p-16 text-primary-foreground shadow-warm">
+          <div className="max-w-3xl">
+            <span className="font-script text-2xl text-paper/90">Something exciting is coming —</span>
+            <h2 className="font-display text-4xl md:text-5xl mt-2">
+              Khana Khazana
+              <span className="block italic text-accent">Your free recipe vault.</span>
+            </h2>
+            <p className="mt-5 text-paper/85 leading-relaxed max-w-2xl">
+              Tired of losing recipes in screenshots and browser tabs? Khana Khazana is a free tool — hosted by Anjee's Kitchen — where you can save, organise and plan recipes from anywhere on the web. Import from any website, build meal plans, create shopping lists. Free for everyone, forever.
+            </p>
+            <div className="mt-6 flex flex-wrap items-center gap-4">
+              <span className="inline-flex items-center rounded-full bg-paper/15 backdrop-blur border border-paper/30 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-paper">
+                Coming Soon
+              </span>
+              <Link
+                to="/contact"
+                className="inline-flex items-center gap-2 rounded-full bg-paper text-spice-clove px-6 py-3 text-sm font-medium hover:scale-[1.02] transition-warm shadow-soft"
+              >
+                Join the waitlist <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+            <p className="mt-5 text-sm text-paper/70">
+              Already sharing their recipes: Anjee (Shahnaz Perveen), Saira Faryal & Aysha Shahab
+            </p>
           </div>
-          <Link
-            to="/recipes"
-            className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:gap-2 transition-all"
-          >
-            View all recipes <ArrowRight className="h-4 w-4" />
-          </Link>
-        </div>
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {featured.map((r) => (
-            <RecipeCard key={r.slug} recipe={r} />
-          ))}
         </div>
       </section>
 
@@ -118,8 +122,7 @@ function HomePage() {
         <div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-24 text-center text-paper">
           <span className="font-script text-3xl text-accent">A note from Anjee</span>
           <blockquote className="mt-4 font-display text-2xl md:text-4xl leading-snug text-balance">
-            "Pakistani food isn't about following rules — it's about tasting as
-            you go, listening to the pot, and trusting your nose."
+            "Pakistani food isn't complicated — it's patient. You give it time, the right spices, and it gives you back something you'll never forget."
           </blockquote>
         </div>
       </section>
@@ -128,14 +131,13 @@ function HomePage() {
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20">
         <div className="rounded-3xl overflow-hidden bg-gradient-warm p-10 md:p-16 text-primary-foreground shadow-warm grid md:grid-cols-2 gap-8 items-center">
           <div>
-            <span className="font-script text-2xl text-paper/90">Don't feel like cooking?</span>
+            <span className="font-script text-2xl text-paper/90">Fresh from our kitchen —</span>
             <h3 className="font-display text-4xl md:text-5xl mt-2">
-              Home-cooked meals,
-              <br /> delivered fresh.
+              Home-cooked food,
+              <br /> made to order.
             </h3>
             <p className="mt-4 text-paper/85 max-w-md leading-relaxed">
-              Pick from our weekly menu and order in two taps over WhatsApp. No app,
-              no fuss — just a hot tiffin at your door.
+              Handmade frozen parathas, kebabs, samosas and more — made with desi ghee and fresh ingredients. Collect from Bradford or get Saturday delivery across Yorkshire and beyond.
             </p>
           </div>
           <div className="flex md:justify-end">
@@ -143,7 +145,7 @@ function HomePage() {
               to="/order"
               className="inline-flex items-center gap-2 rounded-full bg-paper text-spice-clove px-7 py-4 text-base font-medium shadow-warm hover:scale-[1.02] transition-warm"
             >
-              See this week's menu <ArrowRight className="h-4 w-4" />
+              See Our Kitchen <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
         </div>
