@@ -9,14 +9,23 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ShopRouteImport } from './routes/shop'
 import { Route as RecipesRouteImport } from './routes/recipes'
 import { Route as OrderRouteImport } from './routes/order'
+import { Route as KhanaKhazanaRouteImport } from './routes/khana-khazana'
+import { Route as HowToOrderRouteImport } from './routes/how-to-order'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CakesRouteImport } from './routes/cakes'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as RecipesIndexRouteImport } from './routes/recipes.index'
 import { Route as RecipesSlugRouteImport } from './routes/recipes.$slug'
 
+const ShopRoute = ShopRouteImport.update({
+  id: '/shop',
+  path: '/shop',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RecipesRoute = RecipesRouteImport.update({
   id: '/recipes',
   path: '/recipes',
@@ -27,9 +36,24 @@ const OrderRoute = OrderRouteImport.update({
   path: '/order',
   getParentRoute: () => rootRouteImport,
 } as any)
+const KhanaKhazanaRoute = KhanaKhazanaRouteImport.update({
+  id: '/khana-khazana',
+  path: '/khana-khazana',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HowToOrderRoute = HowToOrderRouteImport.update({
+  id: '/how-to-order',
+  path: '/how-to-order',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CakesRoute = CakesRouteImport.update({
+  id: '/cakes',
+  path: '/cakes',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -56,17 +80,25 @@ const RecipesSlugRoute = RecipesSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/cakes': typeof CakesRoute
   '/contact': typeof ContactRoute
+  '/how-to-order': typeof HowToOrderRoute
+  '/khana-khazana': typeof KhanaKhazanaRoute
   '/order': typeof OrderRoute
   '/recipes': typeof RecipesRouteWithChildren
+  '/shop': typeof ShopRoute
   '/recipes/$slug': typeof RecipesSlugRoute
   '/recipes/': typeof RecipesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/cakes': typeof CakesRoute
   '/contact': typeof ContactRoute
+  '/how-to-order': typeof HowToOrderRoute
+  '/khana-khazana': typeof KhanaKhazanaRoute
   '/order': typeof OrderRoute
+  '/shop': typeof ShopRoute
   '/recipes/$slug': typeof RecipesSlugRoute
   '/recipes': typeof RecipesIndexRoute
 }
@@ -74,9 +106,13 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/cakes': typeof CakesRoute
   '/contact': typeof ContactRoute
+  '/how-to-order': typeof HowToOrderRoute
+  '/khana-khazana': typeof KhanaKhazanaRoute
   '/order': typeof OrderRoute
   '/recipes': typeof RecipesRouteWithChildren
+  '/shop': typeof ShopRoute
   '/recipes/$slug': typeof RecipesSlugRoute
   '/recipes/': typeof RecipesIndexRoute
 }
@@ -85,20 +121,38 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/cakes'
     | '/contact'
+    | '/how-to-order'
+    | '/khana-khazana'
     | '/order'
     | '/recipes'
+    | '/shop'
     | '/recipes/$slug'
     | '/recipes/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/contact' | '/order' | '/recipes/$slug' | '/recipes'
+  to:
+    | '/'
+    | '/about'
+    | '/cakes'
+    | '/contact'
+    | '/how-to-order'
+    | '/khana-khazana'
+    | '/order'
+    | '/shop'
+    | '/recipes/$slug'
+    | '/recipes'
   id:
     | '__root__'
     | '/'
     | '/about'
+    | '/cakes'
     | '/contact'
+    | '/how-to-order'
+    | '/khana-khazana'
     | '/order'
     | '/recipes'
+    | '/shop'
     | '/recipes/$slug'
     | '/recipes/'
   fileRoutesById: FileRoutesById
@@ -106,13 +160,24 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  CakesRoute: typeof CakesRoute
   ContactRoute: typeof ContactRoute
+  HowToOrderRoute: typeof HowToOrderRoute
+  KhanaKhazanaRoute: typeof KhanaKhazanaRoute
   OrderRoute: typeof OrderRoute
   RecipesRoute: typeof RecipesRouteWithChildren
+  ShopRoute: typeof ShopRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/shop': {
+      id: '/shop'
+      path: '/shop'
+      fullPath: '/shop'
+      preLoaderRoute: typeof ShopRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/recipes': {
       id: '/recipes'
       path: '/recipes'
@@ -127,11 +192,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OrderRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/khana-khazana': {
+      id: '/khana-khazana'
+      path: '/khana-khazana'
+      fullPath: '/khana-khazana'
+      preLoaderRoute: typeof KhanaKhazanaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/how-to-order': {
+      id: '/how-to-order'
+      path: '/how-to-order'
+      fullPath: '/how-to-order'
+      preLoaderRoute: typeof HowToOrderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact': {
       id: '/contact'
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cakes': {
+      id: '/cakes'
+      path: '/cakes'
+      fullPath: '/cakes'
+      preLoaderRoute: typeof CakesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -181,9 +267,13 @@ const RecipesRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  CakesRoute: CakesRoute,
   ContactRoute: ContactRoute,
+  HowToOrderRoute: HowToOrderRoute,
+  KhanaKhazanaRoute: KhanaKhazanaRoute,
   OrderRoute: OrderRoute,
   RecipesRoute: RecipesRouteWithChildren,
+  ShopRoute: ShopRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
